@@ -5,6 +5,10 @@
 package mg.itu.tovintsoa.tp4banquetovintsoa.ejb;
 
 import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import java.util.List;
+import mg.itu.tovintsoa.tp4banquetovintsoa.entities.CompteBancaire;
 
 /**
  *
@@ -12,5 +16,13 @@ import jakarta.ejb.Stateless;
  */
 @Stateless
 public class GestionnaireCompte {
+    @PersistenceContext(unitName = "banquePU")
+    private EntityManager em;
     
+    public void creerCompte(CompteBancaire c) {
+     
+    } 
+    List<CompteBancaire> getAllComptes() {
+        return null;
+    } 
 }
