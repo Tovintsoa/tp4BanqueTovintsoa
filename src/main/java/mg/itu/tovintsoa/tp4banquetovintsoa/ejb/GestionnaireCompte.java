@@ -5,6 +5,7 @@
 package mg.itu.tovintsoa.tp4banquetovintsoa.ejb;
 
 import jakarta.annotation.sql.DataSourceDefinition;
+import jakarta.ejb.EJB;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -44,7 +45,10 @@ public class GestionnaireCompte {
     public CompteBancaire findById(String id){
         return em.find(CompteBancaire.class, Long.valueOf(id));
     }
-     public CompteBancaire update(CompteBancaire cb){
+    public CompteBancaire update(CompteBancaire cb){
          return em.merge(cb);
     } 
+     public void persist(CompteBancaire c) {
+        em.persist(c);
+    }
 }
