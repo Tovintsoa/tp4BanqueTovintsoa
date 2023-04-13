@@ -24,7 +24,7 @@ public class InsertDonneeCompte {
     
     @PostConstruct
     public void init(){
-         
+         if(nbComptes() == 0){
             CompteBancaire compte1 = new CompteBancaire("John Lennon",150000);
             entityManager.persist(compte1);
             CompteBancaire compte2 = new CompteBancaire("Paul McCartney",950000);
@@ -33,9 +33,14 @@ public class InsertDonneeCompte {
             entityManager.persist(compte3);
             CompteBancaire compte4 = new CompteBancaire("Georges Harrisson",100000);
             entityManager.persist(compte4);
+         }
         
     }
     
-    
+    public int  nbComptes(){
+        Query query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c");
+        Long nbComptes = (Long) query.getSingleResult();
+        return nbComptes.intValue();
+    }
   
 }
