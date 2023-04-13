@@ -8,6 +8,7 @@ import jakarta.annotation.sql.DataSourceDefinition;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import java.util.List;
 import mg.itu.tovintsoa.tp4banquetovintsoa.entities.CompteBancaire;
 
@@ -34,9 +35,10 @@ public class GestionnaireCompte {
     private EntityManager em;
     
     public void creerCompte(CompteBancaire c) {
-     
+        em.persist(c);
     } 
     List<CompteBancaire> getAllComptes() {
-        return null;
+         Query query = em.createNamedQuery("CompteBancaire.findAll");
+         return query.getResultList();
     } 
 }
