@@ -31,9 +31,15 @@
                     </h:column>
                     <h:column>
                        <f:facet name="header">
-                           <h:outputText value="Nom"/>
+                           <h:outputText value="Solde"/>
                        </f:facet>
                        <h:outputText value="#{item.solde}"/>
+                    </h:column>
+                     <h:column>
+                       <f:facet name="header">
+                           <h:outputText value="Effacer"/>
+                       </f:facet>
+                     <h:graphicImage value="./resources/image/del.png" alt="Effacer" />
                     </h:column>
                 </h:dataTable>
             </ui:define>
