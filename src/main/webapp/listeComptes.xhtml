@@ -17,9 +17,15 @@
                  <h:messages/>
                 <h:dataTable value="#{listeComptes.allcomptes}"
                var="item"  >
+                     <h:column>
+                       <f:facet name="header">
+                           <h:outputText value="id"/>
+                       </f:facet>
+                       <h:link outcome="detailCompte?id=#{item.id}" value="#{item.id}"/>
+                    </h:column>
                     <h:column>
                        <f:facet name="header">
-                           <h:outputText value="Id"/>
+                           <h:outputText value="Nom"/>
                        </f:facet>
                        <h:outputText value="#{item.nom}"/>
                     </h:column>
