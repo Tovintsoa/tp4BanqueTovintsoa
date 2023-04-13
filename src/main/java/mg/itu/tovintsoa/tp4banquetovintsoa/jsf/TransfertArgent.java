@@ -22,8 +22,11 @@ import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
+
 import mg.itu.tovintsoa.tp4banquetovintsoa.ejb.GestionnaireCompte;
 import mg.itu.tovintsoa.tp4banquetovintsoa.entities.CompteBancaire;
+import mg.itu.tovintsoa.tp4banquetovintsoa.jsf.util.Util;
 
 /**
  *
@@ -82,14 +85,33 @@ public class TransfertArgent implements Serializable  {
     @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public String action() throws IllegalStateException, Exception {
          userTransaction.begin();
+         boolean erreur = false;
         try {
-            int montantVal = Integer.parseInt(this.getMontant());
+            int montantVal = 0;
+            if(!this.getMontant().isEmpty()){
+                montantVal = Integer.parseInt(this.getMontant());
+            }
             compteOrigine.setSolde(compteOrigine.getSolde() - montantVal);
             compteDestinataire.setSolde(compteDestinataire.getSolde() + montantVal);
-            
+            if(Objects.equals(compteOrigine.getId(), compteDestinataire.getId())){
+                Util.messageErreur("On ne peut pas tranférer depuis la meme compte", "On ne peut pas tranférer depuis la meme compte", "form:source");
+                erreur = true;
+            }
+            if(compteOrigine.getSolde() < montantVal){
+                 Util.messageErreur("Le montant saisi est supérieur au solde actuel de l'origine", "Le montant saisi est supérieur au solde actuel de l'origine", "form:source");
+                 erreur = true;
+            }
+            if(montantVal == 0){
+                Util.messageErreur("Veuillez saisir un montant valide", "Veuillez saisir un montant valide", "form:source");
+                erreur = true;
+            }
+            if(erreur){
+                return null;
+            }
             gestionnaireCompte.update(compteOrigine);
             gestionnaireCompte.update(compteDestinataire);
             userTransaction.commit();
+            Util.addFlashInfoMessage("Transfert correctement effectué");
         }
         catch (HeuristicMixedException | HeuristicRollbackException | RollbackException | SystemException | IllegalStateException | NumberFormatException | SecurityException ex) {
             if (userTransaction.getStatus() == Status.STATUS_ACTIVE) {
@@ -98,9 +120,9 @@ public class TransfertArgent implements Serializable  {
             throw ex;
             
         }
-        finally {
-            return "transfertArgent?faces-redirect=true";
-        }
+        
+        return "listeComptes?faces-redirect=true";
+        
           
     }
 }
