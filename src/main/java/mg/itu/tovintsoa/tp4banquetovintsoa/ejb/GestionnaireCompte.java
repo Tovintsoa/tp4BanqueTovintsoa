@@ -41,4 +41,10 @@ public class GestionnaireCompte {
          Query query = em.createNamedQuery("CompteBancaire.findAll");
          return query.getResultList();
     } 
+    public CompteBancaire findById(String id){
+        return em.find(CompteBancaire.class, Long.valueOf(id));
+    }
+     public CompteBancaire update(CompteBancaire cb){
+         return em.merge(cb);
+    } 
 }

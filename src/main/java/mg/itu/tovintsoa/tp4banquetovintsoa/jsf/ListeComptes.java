@@ -7,6 +7,7 @@ package mg.itu.tovintsoa.tp4banquetovintsoa.jsf;
 import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.Dependent;
+import jakarta.faces.view.ViewScoped;
 import java.io.Serializable;
 import java.util.List;
 import mg.itu.tovintsoa.tp4banquetovintsoa.ejb.GestionnaireCompte;
@@ -17,7 +18,7 @@ import mg.itu.tovintsoa.tp4banquetovintsoa.entities.CompteBancaire;
  * @author Tovintsoa-Capri
  */
 @Named(value = "listeComptes")
-@Dependent
+@ViewScoped
 public class ListeComptes implements Serializable {
      private List<CompteBancaire> compteBancaireList;  
      @EJB
@@ -33,5 +34,5 @@ public class ListeComptes implements Serializable {
         }
         return compteBancaireList;
     }
-    
+   
 }

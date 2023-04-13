@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template_defaut.xhtml">
+
+            <ui:define name="top">
+                TP compte bancaire > Transfert d'argent
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form >
+                    <h:messages/>
+                    <h:panelGrid columns="2">
+                       <h:outputLabel value="ID compte d'origine" for="idOrigine" />
+                       <h:selectOneMenu id="idOrigine" converter="compteBancaireConverter" value="#{transfertArgent.compteOrigine}" title="Compte d'origine" required="true" requiredMessage="Champ origine requis">
+                          <!-- TODO: update below reference to list of available items-->
+                           <f:selectItems value="#{transfertArgent.allComptes}"
+                                        var="compteBancaire"
+                                        itemLabel=" #{compteBancaire.nom}" 
+                                        itemValue="#{compteBancaire}"/>
+                       </h:selectOneMenu>
+                       <h:outputLabel value="ID compte destinataire" for="idDestinataire" />
+                       <h:selectOneMenu id="idDestinataire" converter="compteBancaireConverter" value="#{transfertArgent.compteDestinataire}" title="Compte destinataire" required="true" requiredMessage="Champ destinataire requis">
+                          <!-- TODO: update below reference to list of available items-->
+                           <f:selectItems value="#{transfertArgent.allComptes}"
+                                        var="compteBancaire"
+                                        itemLabel=" #{compteBancaire.nom}" 
+                                        itemValue="#{compteBancaire}"/>
+                       </h:selectOneMenu>
+                       <h:outputLabel value="Montant à transferer" for="montant" />
+                       <h:inputText id="montant" value="#{transfertArgent.montant}" title="montant" />
+                       <h:commandButton id="transfertArgent" value="Transférer" action="#{transfertArgent.action}"/>
+                    </h:panelGrid>
+                    
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
