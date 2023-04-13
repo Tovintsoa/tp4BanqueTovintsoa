@@ -37,7 +37,7 @@ public class GestionnaireCompte {
     public void creerCompte(CompteBancaire c) {
         em.persist(c);
     } 
-    List<CompteBancaire> getAllComptes() {
+    public List<CompteBancaire> getAllComptes() {
          Query query = em.createNamedQuery("CompteBancaire.findAll");
          return query.getResultList();
     } 

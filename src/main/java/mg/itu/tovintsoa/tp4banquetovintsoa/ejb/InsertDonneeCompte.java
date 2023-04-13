@@ -40,6 +40,9 @@ public class InsertDonneeCompte {
     public int  nbComptes(){
         Query query = entityManager.createQuery("SELECT COUNT(c) FROM CompteBancaire c");
         Long nbComptes = (Long) query.getSingleResult();
+        if(nbComptes == null){
+            return 0;
+        }
         return nbComptes.intValue();
     }
   
